@@ -2,6 +2,7 @@ import flet as ft
 from db import init_db, save_preset, load_presets
 from export import export_to_pdf
 
+
 def main(page: ft.Page):
     """Основной класс приложения."""
     page.title = "Skating System Pro"
@@ -13,13 +14,12 @@ def main(page: ft.Page):
 
     # Состояние
     dances = ["Вальс", "Танго", "Фокстрот"]
-    dancers = [f"Участник {i+1}" for i in range(6)]
-    judges = [f"Судья {i+1}" for i in range(5)]
+    dancers = [f"Участник {i + 1}" for i in range(6)]
+    judges = [f"Судья {i + 1}" for i in range(5)]
     current_dance_idx = 0
 
     # Инициализация БД
     page.on_resize = on_resize
-
     init_db()
 
     # 1. Вкладки танцев (Drag-and-Drop)
@@ -35,7 +35,11 @@ def main(page: ft.Page):
                 group="dances",
                 content=ft.DragTarget(
                     group="dances",
-                    content=ft.Text(dance),
+                    content=ft.Container(
+                        content=ft.Text(dance),
+                        padding=10,
+                        border=ft.border.all(1),
+                    ),
                     on_accept=move_dance,
                     data=str(idx),
                 ),
@@ -69,6 +73,7 @@ def main(page: ft.Page):
         page.update()
 
     dancer_rows = ft.Column()
+    dancers_list_view = ft.ListView(expand=True)
 
     # 3. Экспорт в PDF
     def on_export(e):
@@ -85,13 +90,20 @@ def main(page: ft.Page):
         ),
         ft.Text("Танцы:"),
         dance_tabs,
+        ft.Divider(),
         ft.Text("Участники:"),
-        ft.ListView(dancer_rows),
+        ft.Container(
+            content=dancer_rows,
+            height=300,
+            border=ft.border.all(1),
+            padding=10,
+        ),
     )
 
     # Инициализация
     update_dance_tabs()
     update_dancer_table()
+
 
 if __name__ == "__main__":
     ft.app(target=main)
