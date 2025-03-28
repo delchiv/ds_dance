@@ -23,7 +23,7 @@ def main(page: ft.Page):
     init_db()
 
     # 1. Вкладки танцев (Drag-and-Drop)
-    def move_dance(e: ft.DragTargetAcceptEvent):
+    def move_dance(e: ft.DragTargetEvent):
         from_idx = int(e.data)
         to_idx = dances.index(e.control.content.content.value)
         dances.insert(to_idx, dances.pop(from_idx))
@@ -47,7 +47,7 @@ def main(page: ft.Page):
     dance_tabs = ft.Row(scroll=True)
 
     # 2. Таблица участников (Drag-and-Drop)
-    def move_dancer(e: ft.DragTargetAcceptEvent):
+    def move_dancer(e: ft.DragTargetEvent):
         from_idx = int(e.data)
         to_idx = dancers.index(e.control.content.value)
         dancers.insert(to_idx, dancers.pop(from_idx))
