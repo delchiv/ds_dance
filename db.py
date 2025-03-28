@@ -8,7 +8,7 @@ def init_db():
     CREATE TABLE IF NOT EXISTS tournaments (
         id INTEGER PRIMARY KEY,
         name TEXT,
-        dances TEXT  # JSON-список танцев
+        dances TEXT  -- JSON-список танцев
     )
     """)
     conn.commit()

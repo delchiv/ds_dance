@@ -6,7 +6,10 @@ def main(page: ft.Page):
     """Основной класс приложения."""
     page.title = "Skating System Pro"
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.on_resize = on_resize
+
+    def on_resize(e):
+        """Обработчик изменения размера окна."""
+        print(f"Window resized to {page.window_width}x{page.window_height}")
 
     # Состояние
     dances = ["Вальс", "Танго", "Фокстрот"]
@@ -15,6 +18,8 @@ def main(page: ft.Page):
     current_dance_idx = 0
 
     # Инициализация БД
+    page.on_resize = on_resize
+
     init_db()
 
     # 1. Вкладки танцев (Drag-and-Drop)
